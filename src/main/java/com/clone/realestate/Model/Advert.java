@@ -25,14 +25,14 @@ public class Advert {
     private UUID id = UUID.randomUUID();
     //@Column(unique = false)
     //private Integer advertNo;
+    private UUID userId;
     private String title;
     private BigDecimal price;
-    private Date createdDate;
+    private Date createdDate = new Date();
     @Enumerated(value = EnumType.STRING)
     private AdvertStatus status;
     private List<String> imageList;
     @OneToOne
-    @JoinColumn(name = "user-id", referencedColumnName = "id")
     private User creator;
 
 

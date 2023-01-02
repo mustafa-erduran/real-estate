@@ -30,6 +30,7 @@ public class AdvertService {
         if (foundUser.isPresent()) {
             advert = Advert.builder()
                     .creator(foundUser.get())
+                    .userId(foundUser.get().getId())
                     .status(request.getStatus())
                     .price(request.getPrice())
                     .createdDate(request.getCreatedDate())
@@ -58,6 +59,14 @@ public class AdvertService {
         Advert advert = convertRequestToAdvert(request,foundUser);
         advertRepository.save(advert);
         return convertAdvertToAdvertResponse(advert);
+    }
+
+    public List<AdvertResponse> getAllAdverts(){
+        List<AdvertResponse> advertList = new ArrayList<>();
+        for(Advert advert : advertRepository.findAll()){
+            advertList.add(convertAdvertToAdvertResponse(advert));
+        }
+        return advertList;
     }
 
     public List<AdvertResponse> getAdvertByUserId(UUID userId){

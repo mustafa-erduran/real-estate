@@ -17,13 +17,20 @@ public class AdvertController {
     @Autowired
     private AdvertService advertService;
 
-    @PostMapping("/advert")
+    @PostMapping("/adverts")
     public ResponseEntity<AdvertResponse> addAdvert(@RequestBody AdvertRequest request){
         return new ResponseEntity<>(advertService.addAdvert(request), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/adverts")
+    public ResponseEntity<List<AdvertResponse>> getAllAdverts(){
+        return new ResponseEntity<>(advertService.getAllAdverts(),HttpStatus.OK);
     }
 
     @GetMapping("adverts/users/{id}")
     public ResponseEntity<List<AdvertResponse>> getAdvertByUserId(@PathVariable UUID id){
         return new ResponseEntity<>(advertService.getAdvertByUserId(id),HttpStatus.OK);
     }
+
+
 }

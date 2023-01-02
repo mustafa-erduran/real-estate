@@ -3,6 +3,8 @@ package com.clone.realestate.Service;
 import com.clone.realestate.Dto.Request.UserRequest;
 import com.clone.realestate.Dto.Response.UserResponse;
 import com.clone.realestate.Model.User;
+import com.clone.realestate.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,55 +13,55 @@ import java.util.*;
 @Service
 public class UserService {
 
-    private Map<UUID,User> userMap = new HashMap<>();
 
+    @Autowired
+    private UserRepository userRepository;
 
     private User convertRequestToUser(UserRequest request){
-        User user = new User();
-        user.setId(user.generateId());
-        user.setName(request.getName());
-        user.setSurname(request.getSurname());
-        user.setAge(request.getAge());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-      return user;
+        return User.builder()
+                .name(request.getName())
+                .surname(request.getSurname())
+                .age(request.getAge())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .build();
     }
 
     private UserResponse convertUserToUserResponse(User savedUser){
-        UserResponse response = new UserResponse();
-        response.setId(savedUser.getId());
-        response.setName(savedUser.getName());
-        response.setSurname(savedUser.getSurname());
-        response.setAge(savedUser.getAge());
-        response.setEmail(savedUser.getEmail());
-        return response;
+        return UserResponse.builder()
+                .id(savedUser.getId())
+                .name(savedUser.getName())
+                .surname(savedUser.getSurname())
+                .age(savedUser.getAge())
+                .email(savedUser.getEmail())
+                .build();
     }
 
     public UserResponse createUser(UserRequest request){
         User savedUser = convertRequestToUser(request);
-        userMap.put(savedUser.getId(),savedUser);
+        userRepository.save(savedUser);
         return convertUserToUserResponse(savedUser);
     }
 
     public List<UserResponse> getAllUsers() {
         List<UserResponse> userList = new ArrayList<>();
 
-        for (UUID userId : userMap.keySet()) {
-            userList.add(convertUserToUserResponse(userMap.get(userId)));
+        for (User user : userRepository.findAll()) {
+            userList.add(convertUserToUserResponse(user));
         }
         return userList;
     }
 
     public UserResponse findUserByUserId(UUID userId){
-        return convertUserToUserResponse(userMap.get(userId));
+        return convertUserToUserResponse(userRepository.findById(userId).get());
     }
 
     public void deleteUserByUserId(UUID userId){
-        userMap.remove(userId);
+        userRepository.deleteById(userId);
     }
 
     public void deleteAllUsers(){
-        userMap.clear();
+        userRepository.deleteAll();
     }
 
 

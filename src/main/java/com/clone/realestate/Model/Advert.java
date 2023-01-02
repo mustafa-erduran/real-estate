@@ -1,5 +1,6 @@
 package com.clone.realestate.Model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,18 +15,25 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table(name = "advert")
 public class Advert {
 
-    private Integer advertNo;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @Column(nullable = false)
+    private UUID id = UUID.randomUUID();
+    //@Column(unique = false)
+    //private Integer advertNo;
     private String title;
     private BigDecimal price;
     private Date createdDate;
+    @Enumerated(value = EnumType.STRING)
     private AdvertStatus status;
     private List<String> imageList;
-
+    @OneToOne
+    @JoinColumn(name = "user-id", referencedColumnName = "id")
     private User creator;
-
-    public UUID generateId(){ return UUID.randomUUID(); }
 
 
 

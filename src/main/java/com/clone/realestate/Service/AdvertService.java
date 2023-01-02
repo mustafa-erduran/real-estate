@@ -5,6 +5,8 @@ import com.clone.realestate.Dto.Response.AdvertResponse;
 import com.clone.realestate.Model.Advert;
 import com.clone.realestate.Model.AdvertStatus;
 import com.clone.realestate.Model.User;
+import com.clone.realestate.Repository.AdvertRepository;
+import com.clone.realestate.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,16 @@ import java.util.*;
 @Slf4j
 public class AdvertService {
 
-    private static Integer advertNo = 22345;
-    private Map<Integer,Advert> advertMap  = new HashMap<>();
     @Autowired
-    private UserService userService;
+    private AdvertRepository advertRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private Advert convertRequestToAdvert(AdvertRequest request, Optional<User> foundUser) {
         Advert advert = null;
         if (foundUser.isPresent()) {
             advert = Advert.builder()
                     .creator(foundUser.get())
-                    .advertNo(advertNo)
                     .status(request.getStatus())
                     .price(request.getPrice())
                     .createdDate(request.getCreatedDate())
@@ -52,9 +53,19 @@ public class AdvertService {
                 .build();
     }
 
-    public AdvertResponse createAdvert(AdvertRequest request){
-        Optional<User> foundUser = userService.findUserByUserId(request.getUserId());
-        Advert savedAdvert = convertRequestToAdvert(request);
-
+    public AdvertResponse addAdvert(AdvertRequest request){
+        Optional<User> foundUser = userRepository.findById(request.getUserId());
+        Advert advert = convertRequestToAdvert(request,foundUser);
+        advertRepository.save(advert);
+        return convertAdvertToAdvertResponse(advert);
     }
+
+    public List<AdvertResponse> getAdvertByUserId(UUID userId){
+        List<AdvertResponse> advertList = new ArrayList<>();
+        for(Advert advert : advertRepository.getAdvertByUserId(userId)){
+            advertList.add(convertAdvertToAdvertResponse(advert));
+        }
+        return advertList;
+    }
+
 }

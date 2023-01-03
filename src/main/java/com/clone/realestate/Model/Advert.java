@@ -23,17 +23,16 @@ public class Advert {
     @GeneratedValue(generator = "UUID")
     @Column(nullable = false)
     private UUID id = UUID.randomUUID();
-    //@Column(unique = false)
-    //private Integer advertNo;
-    private UUID userId;
+    @Column(unique = false)
+    private Integer advertNo;
     private String title;
     private BigDecimal price;
     private Date createdDate = new Date();
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(value = EnumType.ORDINAL)
     private AdvertStatus status;
     private List<String> imageList;
     @OneToOne
-    private User creator;
+    private User owner;
 
 
 

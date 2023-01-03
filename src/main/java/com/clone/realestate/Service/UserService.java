@@ -56,6 +56,10 @@ public class UserService {
         return convertUserToUserResponse(userRepository.findById(userId).get());
     }
 
+   /* public UserResponse findUserByEmail(String email){
+        return convertUserToUserResponse(userRepository.findByUserByEmail(email));
+    }*/
+
     public void deleteUserByUserId(UUID userId){
         userRepository.deleteById(userId);
     }

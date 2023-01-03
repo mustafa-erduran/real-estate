@@ -29,8 +29,7 @@ public class AdvertService {
         Advert advert = null;
         if (foundUser.isPresent()) {
             advert = Advert.builder()
-                    .creator(foundUser.get())
-                    .userId(foundUser.get().getId())
+                    .owner(foundUser.get())
                     .status(request.getStatus())
                     .price(request.getPrice())
                     .createdDate(request.getCreatedDate())
@@ -45,7 +44,7 @@ public class AdvertService {
 
     private AdvertResponse convertAdvertToAdvertResponse(Advert savedAdvert){
         return AdvertResponse.builder()
-                .user(savedAdvert.getCreator())
+                .user(savedAdvert.getOwner())
                 .title(savedAdvert.getTitle())
                 .price(savedAdvert.getPrice())
                 .createdDate(savedAdvert.getCreatedDate())
@@ -57,6 +56,7 @@ public class AdvertService {
     public AdvertResponse addAdvert(AdvertRequest request){
         Optional<User> foundUser = userRepository.findById(request.getUserId());
         Advert advert = convertRequestToAdvert(request,foundUser);
+
         advertRepository.save(advert);
         return convertAdvertToAdvertResponse(advert);
     }
@@ -69,9 +69,17 @@ public class AdvertService {
         return advertList;
     }
 
-    public List<AdvertResponse> getAdvertByUserId(UUID userId){
+    public List<AdvertResponse> getAdvertByOwnerId(UUID userId){
         List<AdvertResponse> advertList = new ArrayList<>();
-        for(Advert advert : advertRepository.getAdvertByUserId(userId)){
+        for(Advert advert : advertRepository.getAdvertByOwnerId(userId)){
+            advertList.add(convertAdvertToAdvertResponse(advert));
+        }
+        return advertList;
+    }
+
+    public List<AdvertResponse> getActiveAdverts(AdvertStatus status){
+        List<AdvertResponse> advertList = new ArrayList<>();
+        for(Advert advert : advertRepository.getAdvertByStatus(status)){
             advertList.add(convertAdvertToAdvertResponse(advert));
         }
         return advertList;

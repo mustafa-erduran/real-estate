@@ -26,6 +26,11 @@ public class UserController {
         return new ResponseEntity<>(userService.findUserByUserId(id),HttpStatus.OK);
     }
 
+   /* @GetMapping("/users/{email}")
+    public ResponseEntity<UserResponse> findUserByEmail(@PathVariable String email){
+        return new ResponseEntity<>(userService.findUserByEmail(email),HttpStatus.OK);
+    }*/
+
     @PostMapping(value = "/users" )
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest request) {
         return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);

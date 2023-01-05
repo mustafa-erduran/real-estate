@@ -1,4 +1,4 @@
-package com.clone.realestate.Model;
+package com.clone.realestate.model;
 
 public enum AdvertStatus {
     PASSIVE,

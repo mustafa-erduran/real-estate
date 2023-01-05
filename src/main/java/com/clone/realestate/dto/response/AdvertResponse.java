@@ -1,14 +1,13 @@
-package com.clone.realestate.Dto.Response;
+package com.clone.realestate.dto.response;
 
-import com.clone.realestate.Model.AdvertStatus;
-import com.clone.realestate.Model.User;
+import com.clone.realestate.model.AdvertStatus;
+import com.clone.realestate.model.User;
 import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder

@@ -1,4 +1,4 @@
-package com.clone.realestate.Model;
+package com.clone.realestate.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

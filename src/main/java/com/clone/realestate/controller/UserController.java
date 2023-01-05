@@ -1,8 +1,8 @@
-package com.clone.realestate.Controller;
+package com.clone.realestate.controller;
 
-import com.clone.realestate.Dto.Request.UserRequest;
-import com.clone.realestate.Dto.Response.UserResponse;
-import com.clone.realestate.Service.UserService;
+import com.clone.realestate.dto.request.UserRequest;
+import com.clone.realestate.dto.response.UserResponse;
+import com.clone.realestate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,19 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RestController
+@RestController()
+@RequestMapping("/api/v1")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserResponse>> getAllAdvert() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id){
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
         return new ResponseEntity<>(userService.findUserByUserId(id),HttpStatus.OK);
     }
 
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<HttpStatus> deleteUserById(@PathVariable UUID id){
+    public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long id){
         userService.deleteUserByUserId(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

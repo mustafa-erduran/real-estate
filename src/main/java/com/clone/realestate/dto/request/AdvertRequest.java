@@ -1,17 +1,16 @@
-package com.clone.realestate.Dto.Request;
+package com.clone.realestate.dto.request;
 
-import com.clone.realestate.Model.AdvertStatus;
+import com.clone.realestate.model.AdvertStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class AdvertRequest {
 
-    private UUID userId;
+    private long userId;
     private String title;
     private BigDecimal price;
     private Date createdDate;

@@ -1,11 +1,10 @@
-package com.clone.realestate.Repository;
+package com.clone.realestate.repository;
 
-import com.clone.realestate.Model.Advert;
+import com.clone.realestate.model.Advert;
 
-import com.clone.realestate.Model.AdvertStatus;
+import com.clone.realestate.model.AdvertStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,18 +1,16 @@
-package com.clone.realestate.Service;
+package com.clone.realestate.service;
 
-import com.clone.realestate.Dto.Request.AdvertRequest;
-import com.clone.realestate.Dto.Response.AdvertResponse;
-import com.clone.realestate.Model.Advert;
-import com.clone.realestate.Model.AdvertStatus;
-import com.clone.realestate.Model.User;
-import com.clone.realestate.Repository.AdvertRepository;
-import com.clone.realestate.Repository.UserRepository;
+import com.clone.realestate.dto.request.AdvertRequest;
+import com.clone.realestate.dto.response.AdvertResponse;
+import com.clone.realestate.model.Advert;
+import com.clone.realestate.model.AdvertStatus;
+import com.clone.realestate.model.User;
+import com.clone.realestate.repository.AdvertRepository;
+import com.clone.realestate.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.*;
 
 
